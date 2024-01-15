@@ -46,14 +46,14 @@ export default class MobileSuggesterHelper extends Plugin {
         }
 
         const line = editor.getLine(position.line);
-        let linkStart = line.indexOf("[[");
+        let linkStart = line.indexOf('[[');
         if (linkStart === -1) {
           return;
         }
 
         linkStart += 2;
 
-        const stringPath = this.getPathForSelectedSuggesterItem()
+        const stringPath = this.getPathForSelectedSuggesterItem();
         if (!stringPath) {
           return;
         }
@@ -76,7 +76,7 @@ export default class MobileSuggesterHelper extends Plugin {
   }
 
   getPathForSelectedSuggesterItem(): string | null {
-    const selectedNoteTitle = document.querySelector('body > div.suggestion-container > div.suggestion > div.suggestion-item.mod-complex.is-selected > div.suggestion-content > div.suggestion-title > span');
+    const selectedNoteTitle = document.querySelector('body > div.suggestion-container > div.suggestion > div.suggestion-item.mod-complex.is-selected > div.suggestion-content > div.suggestion-title');
     if (!selectedNoteTitle) {
       return null;
     }
@@ -93,16 +93,16 @@ export default class MobileSuggesterHelper extends Plugin {
       }
     }
 
-    return pathToFind ;
+    return pathToFind;
   }
 
-    /**
+  /**
    * Gets the current markdown editor if it exists {@link https://github.com/chrisgrieser/obsidian-smarter-paste/blob/master/main.ts#L37-L41|Obsidian Smarter Paste Source}
    * @return {Editor} Returns the current codemirror editor if there is an active view of type markdown or null if there is not one.
    */
-    private getEditor(): Editor | null {
-      const activeLeaf = this.app.workspace.getActiveViewOfType(MarkdownView);
-      if (!activeLeaf) return null;
-      return activeLeaf.editor;
-    }
+  private getEditor(): Editor | null {
+    const activeLeaf = this.app.workspace.getActiveViewOfType(MarkdownView);
+    if (!activeLeaf) return null;
+    return activeLeaf.editor;
+  }
 }

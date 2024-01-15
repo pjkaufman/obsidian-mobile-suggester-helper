@@ -1,4 +1,4 @@
-import {Editor, MarkdownView, Plugin, normalizePath} from 'obsidian';
+import {Editor, MarkdownView, Platform, Plugin, normalizePath} from 'obsidian';
 
 const downArrowKeyEvent = new KeyboardEvent('keydown', {
   which: 40,
@@ -12,6 +12,11 @@ const upArrowKeyEvent = new KeyboardEvent('keydown', {
 
 export default class MobileSuggesterHelper extends Plugin {
   async onload() {
+
+    if (!Platform.isMobile) {
+      return;
+    }
+
     this.addCommand({
       id: 'mobile-suggester-helper-move-selector-down',
       name: 'Move the selected item down one in the suggester.',

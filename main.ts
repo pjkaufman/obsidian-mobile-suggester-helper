@@ -1,4 +1,4 @@
-import {Editor, MarkdownView, Platform, Plugin, normalizePath} from 'obsidian';
+import {Editor, EditorPosition, MarkdownView, Platform, Plugin, normalizePath} from 'obsidian';
 
 const downArrowKeyEvent = new KeyboardEvent('keydown', {
   which: 40,
@@ -12,7 +12,6 @@ const upArrowKeyEvent = new KeyboardEvent('keydown', {
 
 export default class MobileSuggesterHelper extends Plugin {
   async onload() {
-
     if (!Platform.isMobile) {
       return;
     }
@@ -67,6 +66,11 @@ export default class MobileSuggesterHelper extends Plugin {
           line: position.line,
           ch: linkStart,
         }, position);
+
+        editor.setCursor({
+          ch: linkStart + stringPath.length,
+          line: position.line,
+        });
       },
     });
   }

@@ -1,4 +1,4 @@
-import {Editor, EditorPosition, MarkdownView, Platform, Plugin, normalizePath} from 'obsidian';
+import {Editor, MarkdownView, Platform, Plugin, TFile, normalizePath} from 'obsidian';
 
 const downArrowKeyEvent = new KeyboardEvent('keydown', {
   which: 40,
@@ -57,7 +57,12 @@ export default class MobileSuggesterHelper extends Plugin {
 
         linkStart += 2;
 
-        const stringPath = this.getPathForSelectedSuggesterItem();
+        const activeFile = this.getActiveFile();
+        if (activeFile == null) {
+          return;
+        }
+
+        const stringPath = this.getPathForSelectedSuggesterItem(activeFile.path);
         if (!stringPath) {
           return;
         }
@@ -84,7 +89,7 @@ export default class MobileSuggesterHelper extends Plugin {
     }
   }
 
-  getPathForSelectedSuggesterItem(): string | null {
+  getPathForSelectedSuggesterItem(fromPath: string): string | null {
     const selectedNoteTitle = document.querySelector('body > div.suggestion-container > div.suggestion > div.suggestion-item.mod-complex.is-selected > div.suggestion-content > div.suggestion-title');
     if (!selectedNoteTitle) {
       return null;
@@ -92,17 +97,17 @@ export default class MobileSuggesterHelper extends Plugin {
 
     const selectedNotePath = document.querySelector('body > div.suggestion-container > div.suggestion > div.suggestion-item.mod-complex.is-selected > div.suggestion-content > div.suggestion-note');
 
-    let pathToFind = selectedNoteTitle.textContent;
+    let pathToFind = selectedNoteTitle.textContent ?? '';
     if (selectedNotePath) {
-      const notePath = selectedNotePath.textContent;
-      if (notePath?.endsWith('/')) {
+      const notePath = selectedNotePath.textContent ?? '';
+      if (notePath.endsWith('/')) {
         pathToFind = normalizePath(notePath+pathToFind);
       } else {
         pathToFind = notePath;
       }
     }
 
-    return pathToFind;
+    return this.getRelativePath(fromPath, pathToFind);
   }
 
   /**
@@ -113,5 +118,38 @@ export default class MobileSuggesterHelper extends Plugin {
     const activeLeaf = this.app.workspace.getActiveViewOfType(MarkdownView);
     if (!activeLeaf) return null;
     return activeLeaf.editor;
+  }
+
+  private getActiveFile(): TFile | null {
+    const activeLeaf = this.app.workspace.getActiveViewOfType(MarkdownView);
+    if (!activeLeaf) return null;
+    return activeLeaf.file;
+  }
+
+  /**
+   * @param {string} fromPath The path which is the the path from which you want to create the relative link
+   * @param {string} toPath The path to the file you want a relative link to
+   * @return {string} The relative path from fromPath to toPath
+   */
+  getRelativePath(fromPath: string, toPath: string): string {
+    const fromPathParts = fromPath.split('/');
+    const toPathParts = toPath.split('/');
+
+    let commonPath = '';
+    let relativePath = '';
+
+    for (let i = 0; i < Math.max(fromPathParts.length, toPathParts.length); i++) {
+      if (fromPathParts[i] === toPathParts[i]) {
+        commonPath += '/' + fromPathParts[i];
+      } else {
+        break;
+      }
+    }
+
+    for (let i = commonPath.length; i < toPathParts.length; i++) {
+      relativePath += '../';
+    }
+
+    return relativePath + toPathParts.slice(commonPath.length).join('/');
   }
 }

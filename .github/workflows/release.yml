@@ -6,7 +6,9 @@ on:
       - "*"
 
 permissions:
-  contents: write   
+  id-token: write
+  contents: write
+  attestations: write
 
 env:
   PLUGIN_NAME: obsidian-mobile-suggester-helper
@@ -27,6 +29,11 @@ jobs:
         run: |
           npm ci
           npm run build
+
+      - name: Generate artifact attestation
+        uses: actions/attest@v4
+        with:
+          subject-path: 'main.js'
 
       - name: Create Manual Install Zip
         run: |

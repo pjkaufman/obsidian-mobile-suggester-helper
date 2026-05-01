@@ -1,6 +1,6 @@
 {
 	"name": "mobile-suggestion-helper",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Helps move the selected element in a suggester up or down on mobile.",
 	"main": "main.js",
 	"scripts": {

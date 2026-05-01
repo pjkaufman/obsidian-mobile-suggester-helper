@@ -1,4 +1,4 @@
-# Mobile Suggester Helper
+# Mobile Suggestion Helper
 
 This plugin is designed to help get a similar experience for selecting files from the wiki link suggester.
 

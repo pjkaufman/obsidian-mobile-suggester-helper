@@ -83,19 +83,19 @@ export default class MobileSuggesterHelper extends Plugin {
   onunload() {}
 
   dispatchEventIfSuggesterExists(event: KeyboardEvent) {
-    const suggesterDiv = document.querySelector('body > div.suggestion-container > div.suggestion');
+    const suggesterDiv = activeDocument.querySelector('body > div.suggestion-container > div.suggestion');
     if (suggesterDiv) {
       suggesterDiv.dispatchEvent(event);
     }
   }
 
   getPathForSelectedSuggesterItem(fromPath: string): string | null {
-    const selectedNoteTitle = document.querySelector('body > div.suggestion-container > div.suggestion > div.suggestion-item.mod-complex.is-selected > div.suggestion-content > div.suggestion-title');
+    const selectedNoteTitle = activeDocument.querySelector('body > div.suggestion-container > div.suggestion > div.suggestion-item.mod-complex.is-selected > div.suggestion-content > div.suggestion-title');
     if (!selectedNoteTitle) {
       return null;
     }
 
-    const selectedNotePath = document.querySelector('body > div.suggestion-container > div.suggestion > div.suggestion-item.mod-complex.is-selected > div.suggestion-content > div.suggestion-note');
+    const selectedNotePath = activeDocument.querySelector('body > div.suggestion-container > div.suggestion > div.suggestion-item.mod-complex.is-selected > div.suggestion-content > div.suggestion-note');
 
     let pathToFind = selectedNoteTitle.textContent ?? '';
     if (selectedNotePath) {

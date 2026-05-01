@@ -62,14 +62,9 @@ export default class MobileSuggesterHelper extends Plugin {
           return;
         }
 
-        let stringPath = this.getPathForSelectedSuggesterItem(activeFile.path);
+        const stringPath = this.getPathForSelectedSuggesterItem(activeFile.path);
         if (!stringPath) {
           return;
-        }
-
-        // If it has extension, keep it. Otherwise add md.
-        if (!this.hasExtension(stringPath)) {
-          stringPath += '.md';
         }
 
         editor.replaceRange(stringPath, {
@@ -156,17 +151,5 @@ export default class MobileSuggesterHelper extends Plugin {
     }
 
     return relativePath + toPathParts.slice(commonPath.length).join('/');
-  }
-
-  /**
-   *  Determines if there is an extension on the path provided. It is based on https://stackoverflow.com/a/12900504/8353749.
-   * @param {string} path The path to to the file in question which may or may not have an extension.
-   * @return {boolean} Whether or not an extension already exists on the path.
-   */
-  private hasExtension(path: string): boolean {
-    const basename = path.split(/[\\/]/).pop() ?? '';
-    const pos = basename.lastIndexOf('.');
-
-    return basename !== '' && pos > 0;
   }
 }

@@ -3,7 +3,7 @@
 	"name": "Mobile Suggestion Helper",
 	"version": "1.0.0",
 	"minAppVersion": "0.15.0",
-	"description": "Helps move the selected element in a suggester up or down for mobile.",
+	"description": "Helps move the selected element in a suggester up or down on mobile.",
 	"author": "pjkaufman",
 	"isDesktopOnly": false
 }

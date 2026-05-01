@@ -1,7 +1,7 @@
 {
-	"name": "obsidian-sample-plugin",
+	"name": "mobile-suggestion-helper",
 	"version": "1.0.0",
-	"description": "This is a sample plugin for Obsidian (https://obsidian.md)",
+	"description": "Helps move the selected element in a suggester up or down on mobile.",
 	"main": "main.js",
 	"scripts": {
     "dev": "node esbuild.config.mjs",

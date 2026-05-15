@@ -14,6 +14,14 @@ In my case, I have multiple files with the same name, but they are in different 
 
 First [install the plugin manually](#manually-installing-the-plugin). Once that is done, I find it easiest to go ahead and add the new commands to the mobile toolbar. Once that is done, I use the up and down arrows in the mobile toolbar to help me. Then once it is on the file that I want to select, I use the checkmark inside the circle to select it. Once a file is selected, I can proceed with typing `#` or `^` and then use the suggester from there to select what I need to.
 
+### Example Usage
+
+Here is a scenario where there are two files with the same name `20260515.md`, but they are in different folders:
+
+![](images/example.gif)
+
+In the video, the plugin commands are present on the mobile toolbar. They are the up and down arrows and the circle with a check ox present.
+
 ## Commands
 
 | Name | Action |
